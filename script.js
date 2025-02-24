@@ -5,6 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
     let operator = "";
     let firstOperand = null;
 
+    function limitDecimals(value) {
+        return parseFloat(value).toFixed(6).replace(/\.?0+$/, ""); // Removes trailing zeros
+    }
+
     buttons.forEach(button => {
         button.addEventListener("click", function () {
             let value = button.innerText;
@@ -28,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (value === "%") {
                 // Percentage
                 if (currentInput) {
-                    currentInput = (parseFloat(currentInput) / 100).toString();
+                    currentInput = limitDecimals(parseFloat(currentInput) / 100);
                     display.innerText = currentInput;
                 }
             } else if (["+", "-", "x", "÷"].includes(value)) {
@@ -59,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             break;
                     }
 
-                    display.innerText = result;
+                    display.innerText = limitDecimals(result);
                     currentInput = result.toString();
                     firstOperand = null;
                     operator = "";
